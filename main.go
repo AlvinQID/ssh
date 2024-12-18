@@ -33,7 +33,7 @@ SSH_PASSWORD=
 SSH_TIMEOUT=
 SFTP_ENABLE=
 `
-	return os.WriteFile("/.ssh_config", []byte(defaultConfig), 0644)
+	return os.WriteFile("./.ssh_config", []byte(defaultConfig), 0644)
 }
 
 func getConfigValue(key string) string {
@@ -42,21 +42,21 @@ func getConfigValue(key string) string {
 		return value
 	}
 
-	_, err := os.Stat("/.ssh_config")
+	_, err := os.Stat("./.ssh_config")
 	if os.IsNotExist(err) {
-		color.Yellow("/.ssh_config not found. Creating with default values.")
+		color.Yellow("./.ssh_config not found. Creating with default values.")
 		if err := createDefaultConfig(); err != nil {
-			color.Red("Error creating /.ssh_config: %v", err)
+			color.Red("Error creating ./.ssh_config: %v", err)
 			return ""
 		}
 	} else if err != nil {
-		color.Red("Error accessing /.ssh_config: %v", err)
+		color.Red("Error accessing ./.ssh_config: %v", err)
 		return ""
 	}
 
-	content, err := os.ReadFile("/.ssh_config")
+	content, err := os.ReadFile("./.ssh_config")
 	if err != nil {
-		color.Red("Error reading /.ssh_config: %v", err)
+		color.Red("Error reading ./.ssh_config: %v", err)
 		return ""
 	}
 
